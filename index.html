@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <!-- Otimizações Nativas para Apple iOS Safari & PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WeGoGym">
+  <meta name="theme-color" content="#090d16">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>WeGoGym — Treino Pessoal</title>
+
+  <!-- Favicon e Ícones Apple Touch -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Estilos da Aplicação -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Flash visual na tela ao terminar o descanso -->
+  <div id="screenFlash" class="screen-flash"></div>
+
+  <div class="app-container">
+    
+    <!-- Cabeçalho Principal -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 5v14M18 5v14M2 9v6M22 9v6M6 12h12"></path>
+          </svg>
+        </div>
+        <div>
+          <div style="display: flex; align-items: center;">
+            <h1 class="brand-name">WeGoGym</h1>
+            <span class="brand-tag">PRO</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Guia de Instalação iOS -->
+        <button id="btnOpenIosGuide" class="icon-btn" title="Adicionar à Tela de Início no iOS">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="3"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"></line>
+          </svg>
+        </button>
+
+        <!-- Configurações & Timer -->
+        <button id="btnOpenSettings" class="icon-btn" title="Configurações e Timer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Banner Sugerindo Adicionar à Tela de Início (iOS) -->
+    <div id="iosInstallBanner" class="ios-banner">
+      <div class="ios-banner-text">
+        📱 <strong>Usar como Aplicativo no iPhone</strong><br>
+        Toque em Compartilhar e selecione <em>"Adicionar à Tela de Início"</em>.
+      </div>
+      <button id="btnDismissIosBanner" class="ios-banner-btn">Entendi</button>
+    </div>
+
+    <!-- Navegação por Abas Segmentadas dos Treinos -->
+    <nav class="workout-nav-container">
+      <div id="workoutTabs" class="segmented-tabs">
+        <!-- Renderizado dinamicamente: Upper 1, Lower, Upper 2, Histórico -->
+      </div>
+    </nav>
+
+    <!-- Painel de Tonelagem e Métricas Musculares -->
+    <section id="tonnageSummary">
+      <!-- Renderizado dinamicamente -->
+    </section>
+
+    <!-- Lista de Exercícios do Treino Ativo -->
+    <main id="workoutExercises">
+      <!-- Renderizado dinamicamente -->
+    </main>
+
+    <!-- Ações Inferiores do Treino -->
+    <div id="workoutActions" class="workout-footer-actions">
+      <button id="btnAddExerciseBtn" class="btn-add-exercise">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Adicionar Exercício ao Treino
+      </button>
+
+      <button id="btnFinishWorkout" class="btn-finish-workout">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        Finalizar Treino & Salvar Resumo
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Barra Flutuante de Descanso (Rest Timer) Fixa com Safe Area -->
+  <div id="floatingTimerBar" class="floating-timer-bar hidden">
+    <div class="timer-left">
+      <div class="timer-ring-wrap">
+        <svg class="timer-svg" viewBox="0 0 42 42">
+          <circle class="timer-ring-bg" cx="21" cy="21" r="18"></circle>
+          <circle id="timerProgressRing" class="timer-ring-progress" cx="21" cy="21" r="18" stroke-dasharray="113.1" stroke-dashoffset="0"></circle>
+        </svg>
+        <div class="timer-icon-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+      </div>
+      <div class="timer-time-display">
+        <span class="timer-label">Descanso</span>
+        <span id="timerDigits" class="timer-digits">01:30</span>
+      </div>
+    </div>
+
+    <div class="timer-controls">
+      <button id="btnTimerMinus15" class="timer-adjust-btn" title="-15s">-15s</button>
+      <button id="btnTimerPlus15" class="timer-adjust-btn" title="+15s">+15s</button>
+
+      <button id="btnTimerToggle" class="timer-main-action" title="Pausar / Retomar">
+        <svg id="timerPauseIcon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+          <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+        </svg>
+        <svg id="timerPlayIcon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+      </button>
+
+      <button id="btnTimerClose" class="timer-close-btn" title="Fechar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal de Troca / Inclusão de Exercício -->
+  <div id="exerciseModal" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="modal-header">
+        <h2 id="exerciseModalTitle" class="modal-title">Selecionar Exercício</h2>
+        <button id="btnCloseExerciseModal" class="icon-btn" style="border: none; background: transparent;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Barra de Busca -->
+      <div class="search-input-wrap">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="exerciseSearchInput" placeholder="Buscar por exercício ou músculo...">
+      </div>
+
+      <!-- Filtro Horizontal de Músculos -->
+      <div id="muscleFilterChips" class="muscle-chips-scroll">
+        <!-- Renderizado dinamicamente -->
+      </div>
+
+      <!-- Lista de Opções de Exercícios -->
+      <div id="exerciseOptionsList" class="exercise-select-list">
+        <!-- Renderizado dinamicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Configurações & Timer -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="modal-header">
+        <h2 class="modal-title">Configurações & Timer</h2>
+        <button id="btnCloseSettingsModal" class="icon-btn" style="border: none; background: transparent;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div style="overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px;">
+        
+        <!-- Duração Padrão do Descanso -->
+        <div>
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 8px;">
+            TEMPO DE DESCANSO PADRÃO (SEGUNDOS)
+          </label>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px;">
+            <button class="timer-preset-btn unit-btn active" data-time="45">45s</button>
+            <button class="timer-preset-btn unit-btn" data-time="60">60s</button>
+            <button class="timer-preset-btn unit-btn" data-time="90">90s</button>
+            <button class="timer-preset-btn unit-btn" data-time="120">2 min</button>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="number" id="customRestTimeInput" class="input-field" style="width: 120px;" placeholder="90" min="5" max="600">
+            <span style="font-size: 0.85rem; color: var(--text-secondary);">segundos customizados</span>
+          </div>
+        </div>
+
+        <!-- Opções de Disparo Automático -->
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #0d121c; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div>
+            <div style="font-weight: 700; font-size: 0.9rem;">Iniciar Timer Automaticamente</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Dispara o cronômetro ao marcar uma série</div>
+          </div>
+          <input type="checkbox" id="autoStartTimerCheck" checked style="width: 20px; height: 20px; accent-color: var(--accent-emerald);">
+        </div>
+
+        <!-- Testar Som do Timer -->
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #0d121c; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div>
+            <div style="font-weight: 700; font-size: 0.9rem;">Alarme Sonoro</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Toca bip de aviso sintetizado</div>
+          </div>
+          <button id="btnTestSound" class="unit-btn active" style="padding: 6px 12px;">Testar Som</button>
+        </div>
+
+        <!-- Restaurar Treinos Originais -->
+        <div style="border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+          <button id="btnResetWorkouts" class="card-action-btn delete-btn" style="width: 100%; justify-content: center; padding: 10px; border: 1px solid rgba(244, 63, 94, 0.3);">
+            Restaurar Treinos Padrão (Upper 1, Lower, Upper 2)
+          </button>
+        </div>
+
+        <!-- Backup de Dados -->
+        <div style="display: flex; gap: 8px;">
+          <button id="btnExportData" class="unit-btn active" style="flex: 1; padding: 10px;">Exportar Backup JSON</button>
+          <button id="btnImportData" class="unit-btn" style="flex: 1; padding: 10px;">Importar Backup</button>
+          <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Tutorial de Instalação no iOS -->
+  <div id="iosGuideModal" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="modal-header">
+        <h2 class="modal-title">Instalar no iPhone (iOS)</h2>
+        <button id="btnCloseIosGuideModal" class="icon-btn" style="border: none; background: transparent;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px; font-size: 0.9rem; line-height: 1.4; color: #e2e8f0;">
+        <p>Para ter a experiência completa como aplicativo no seu iPhone sem barra de endereços do navegador:</p>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0d121c; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-emerald);">1</div>
+          <div>Abra este link no navegador <strong>Safari</strong> do iPhone.</div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0d121c; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-emerald);">2</div>
+          <div>Toque no botão <strong>Compartilhar</strong> (ícone de quadrado com a seta para cima ⎋ na barra inferior do Safari).</div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0d121c; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-emerald);">3</div>
+          <div>Role as opções e toque em <strong>"Adicionar à Tela de Início"</strong> (ícone com o sinal ➕).</div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0d121c; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-emerald);">4</div>
+          <div>Toque em <strong>"Adicionar"</strong> no canto superior direito. Pronto! O WeGoGym abrirá como app nativo com tela cheia.</div>
+        </div>
+
+        <button id="btnConfirmIosGuide" class="btn-finish-workout" style="margin-top: 8px;">Perfeito, entendi!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Resumo de Conclusão do Treino -->
+  <div id="workoutSummaryModal" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="modal-header">
+        <h2 class="modal-title" style="color: var(--accent-emerald);">Treino Finalizado! 🔥</h2>
+        <button id="btnCloseSummaryModal" class="icon-btn" style="border: none; background: transparent;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div id="summaryModalContent" style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 20px;">
+        <!-- Conteúdo do Resumo Injetado Dinamicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Principal da Aplicação (ES Modules) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
