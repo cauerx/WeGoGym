@@ -308,25 +308,25 @@ class App {
       <div style="text-align: center; padding: 10px 0;">
         <div style="font-size: 0.9rem; color: var(--text-secondary);">${workout.name} concluído com sucesso!</div>
         <div style="font-size: 2.5rem; font-weight: 800; color: #ffffff; margin: 8px 0;">
-          ${formatWeight(metrics.totalVolumeKg)} <span style="font-size: 1.2rem; color: var(--accent-cyan);">kg</span>
+          ${formatWeight(metrics.totalVolumeKg)} <span style="font-size: 1.2rem; color: var(--accent-yellow);">kg</span>
         </div>
-        <div style="font-size: 0.85rem; color: var(--accent-emerald); font-weight: 700;">
+        <div style="font-size: 0.85rem; color: var(--accent-yellow); font-weight: 700;">
           Tonelagem Total Movimentada
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #0d121c; padding: 14px; border-radius: 14px; border: 1px solid var(--border-subtle);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #0e1119; padding: 14px; border-radius: 14px; border: 1px solid var(--border-subtle);">
         <div>
           <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">SÉRIES REALIZADAS</div>
           <div style="font-size: 1.2rem; font-weight: 800; color: #ffffff;">${metrics.completedSets} de ${metrics.totalSets}</div>
         </div>
         <div>
           <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">VOLUME DE TRABALHO</div>
-          <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-emerald);">${formatWeight(metrics.workVolumeKg)} kg</div>
+          <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-yellow);">${formatWeight(metrics.workVolumeKg)} kg</div>
         </div>
       </div>
 
-      <div style="background: #0d121c; padding: 14px; border-radius: 14px; border: 1px solid var(--border-subtle);">
+      <div style="background: #0e1119; padding: 14px; border-radius: 14px; border: 1px solid var(--border-subtle);">
         <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
           Grupamentos Mais Solicitados
         </div>
@@ -336,7 +336,7 @@ class App {
             (m) => `
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.85rem;">
             <span style="font-weight: 600;">${m.muscle}</span>
-            <span style="color: var(--accent-cyan); font-weight: 700;">${formatWeight(m.volumeKg)} kg (${m.percentage}%)</span>
+            <span style="color: var(--accent-yellow); font-weight: 700;">${formatWeight(m.volumeKg)} kg (${m.percentage}%)</span>
           </div>
         `
           )
@@ -458,11 +458,67 @@ class App {
       document.getElementById('workoutSummaryModal')?.classList.remove('active');
     });
 
+    // Ativação e Teste de Notificações & Vibração
+    document.getElementById('btnEnableNotifications')?.addEventListener('click', async () => {
+      await RestTimer.requestNotificationPermission();
+      this.updateNotificationUIState();
+    });
+
+    document.getElementById('btnTestNotification')?.addEventListener('click', async () => {
+      const status = RestTimer.getNotificationStatus();
+      if (status !== 'granted') {
+        const res = await RestTimer.requestNotificationPermission();
+        this.updateNotificationUIState();
+        if (res !== 'granted') {
+          alert('Por favor, autorize as notificações para que o aviso no celular funcione!');
+          return;
+        }
+      }
+      this.timer.triggerAllAlerts();
+      this.ui.triggerScreenFlash();
+    });
+
     // Banner iOS Dismiss
     document.getElementById('btnDismissIosBanner')?.addEventListener('click', () => {
       document.getElementById('iosInstallBanner')?.remove();
       localStorage.setItem('wegogym_dismiss_ios_banner', 'true');
     });
+  }
+
+  updateNotificationUIState() {
+    const badge = document.getElementById('notifStatusBadge');
+    const btn = document.getElementById('btnEnableNotifications');
+    if (!badge || !btn) return;
+
+    const status = RestTimer.getNotificationStatus();
+    if (status === 'granted') {
+      badge.innerText = 'Ativado ✅';
+      badge.style.color = '#fde047';
+      badge.style.background = 'rgba(250, 204, 21, 0.2)';
+      btn.innerText = 'Permitido';
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+    } else if (status === 'denied') {
+      badge.innerText = 'Bloqueado ⚠️';
+      badge.style.color = '#f87171';
+      badge.style.background = 'rgba(239, 68, 68, 0.15)';
+      btn.innerText = 'Bloqueado';
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+    } else if (status === 'unsupported') {
+      badge.innerText = 'Indisponível';
+      badge.style.color = '#94a3b8';
+      badge.style.background = 'rgba(255, 255, 255, 0.1)';
+      btn.innerText = 'N/A';
+      btn.disabled = true;
+    } else {
+      badge.innerText = 'Pendente 🔔';
+      badge.style.color = '#fbbf24';
+      badge.style.background = 'rgba(245, 158, 11, 0.15)';
+      btn.innerText = 'Ativar';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
   }
 
   checkIosBannerState() {
@@ -474,6 +530,8 @@ class App {
   openSettingsModal() {
     const modal = document.getElementById('settingsModal');
     if (!modal) return;
+
+    this.updateNotificationUIState();
 
     const customInput = document.getElementById('customRestTimeInput');
     const autoStartCheck = document.getElementById('autoStartTimerCheck');

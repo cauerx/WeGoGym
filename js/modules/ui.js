@@ -94,7 +94,7 @@ export class UIManager {
       <div class="tonnage-summary-card">
         <div class="summary-header">
           <div class="summary-title-wrap">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 20V10"></path>
               <path d="M12 20V4"></path>
               <path d="M6 20v-6"></path>
@@ -123,7 +123,7 @@ export class UIManager {
           </div>
           <div class="stat-box">
             <span class="stat-label">Séries Concluídas</span>
-            <div class="stat-value" style="font-size: 1.15rem; color: var(--accent-emerald);">
+            <div class="stat-value" style="font-size: 1.15rem; color: var(--accent-yellow);">
               <span>${metrics.completedSets}</span>
               <span style="font-size: 0.8rem; color: var(--text-muted);">/${metrics.totalSets}</span>
             </div>
@@ -437,7 +437,7 @@ export class UIManager {
         <div style="padding: 24px; text-align: center; color: var(--text-muted);">
           Nenhum exercício encontrado.
           <div style="margin-top: 10px;">
-            <button id="btnCreateCustomExercise" class="card-action-btn" style="margin: 0 auto; color: var(--accent-emerald);">
+            <button id="btnCreateCustomExercise" class="card-action-btn" style="margin: 0 auto; color: var(--accent-yellow);">
               + Criar exercício com o nome "${query}"
             </button>
           </div>
@@ -599,7 +599,7 @@ export class UIManager {
               <span style="font-size: 0.75rem; color: var(--text-muted);">${dateStr}</span>
             </div>
             <div style="text-align: right;">
-              <span style="font-size: 1.1rem; font-weight: 800; color: var(--accent-cyan);">${formatWeight(session.totalVolumeKg || 0)} kg</span>
+              <span style="font-size: 1.1rem; font-weight: 800; color: var(--accent-yellow);">${formatWeight(session.totalVolumeKg || 0)} kg</span>
               <div style="font-size: 0.72rem; color: var(--text-muted);">${session.completedSets || 0} séries feitas</div>
             </div>
           </div>

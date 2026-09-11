@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="WeGoGym">
-  <meta name="theme-color" content="#090d16">
+  <meta name="theme-color" content="#0a0b0e">
   <meta name="format-detection" content="telephone=no">
 
   <title>WeGoGym — Treino Pessoal</title>
@@ -39,7 +39,7 @@
         <div>
           <div style="display: flex; align-items: center;">
             <h1 class="brand-name">WeGoGym</h1>
-            <span class="brand-tag">PRO</span>
+            <span class="brand-tag">GOLD</span>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
           </svg>
         </button>
 
-        <!-- Configurações & Timer -->
+        <!-- Configurações, Notificações & Timer -->
         <button id="btnOpenSettings" class="icon-btn" title="Configurações e Timer">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"></circle>
@@ -67,7 +67,7 @@
     <div id="iosInstallBanner" class="ios-banner">
       <div class="ios-banner-text">
         📱 <strong>Usar como Aplicativo no iPhone</strong><br>
-        Toque em Compartilhar e selecione <em>"Adicionar à Tela de Início"</em>.
+        Toque em Compartilhar e selecione <em>"Adicionar à Tela de Início"</em> para ativar notificações e tela cheia.
       </div>
       <button id="btnDismissIosBanner" class="ios-banner-btn">Entendi</button>
     </div>
@@ -205,6 +205,23 @@
 
       <div style="overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px;">
         
+        <!-- Notificações Push & Vibração no Celular -->
+        <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; background: #0e1119; border-radius: 14px; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">
+                <span>Notificações & Vibração</span>
+                <span id="notifStatusBadge" style="font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: rgba(250, 204, 21, 0.15); color: #facc15;">Verificando...</span>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Vibra e envia notificação no celular ao término do descanso</div>
+            </div>
+            <button id="btnEnableNotifications" class="unit-btn active" style="padding: 6px 12px; font-size: 0.75rem; border-radius: 8px;">Ativar</button>
+          </div>
+          <button id="btnTestNotification" class="card-action-btn" style="color: var(--accent-yellow); justify-content: center; border: 1px dashed rgba(250, 204, 21, 0.35); border-radius: 8px; padding: 8px 12px; font-weight: 700;">
+            🔔 Testar Notificação & Vibração Agora
+          </button>
+        </div>
+
         <!-- Duração Padrão do Descanso -->
         <div>
           <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 8px;">
@@ -223,19 +240,19 @@
         </div>
 
         <!-- Opções de Disparo Automático -->
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #0d121c; border-radius: 12px; border: 1px solid var(--border-subtle);">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #0e1119; border-radius: 12px; border: 1px solid var(--border-subtle);">
           <div>
             <div style="font-weight: 700; font-size: 0.9rem;">Iniciar Timer Automaticamente</div>
             <div style="font-size: 0.75rem; color: var(--text-muted);">Dispara o cronômetro ao marcar uma série</div>
           </div>
-          <input type="checkbox" id="autoStartTimerCheck" checked style="width: 20px; height: 20px; accent-color: var(--accent-emerald);">
+          <input type="checkbox" id="autoStartTimerCheck" checked style="width: 20px; height: 20px; accent-color: var(--accent-yellow);">
         </div>
 
         <!-- Testar Som do Timer -->
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #0d121c; border-radius: 12px; border: 1px solid var(--border-subtle);">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #0e1119; border-radius: 12px; border: 1px solid var(--border-subtle);">
           <div>
             <div style="font-weight: 700; font-size: 0.9rem;">Alarme Sonoro</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Toca bip de aviso sintetizado</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Toca acorde sonoro sintetizado</div>
           </div>
           <button id="btnTestSound" class="unit-btn active" style="padding: 6px 12px;">Testar Som</button>
         </div>
@@ -273,26 +290,26 @@
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 16px; font-size: 0.9rem; line-height: 1.4; color: #e2e8f0;">
-        <p>Para ter a experiência completa como aplicativo no seu iPhone sem barra de endereços do navegador:</p>
+        <p>Para ter a experiência completa como aplicativo no seu iPhone sem barra de endereços do navegador e com suporte completo a notificações push:</p>
 
-        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0d121c; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
-          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-emerald);">1</div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0e1119; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-yellow);">1</div>
           <div>Abra este link no navegador <strong>Safari</strong> do iPhone.</div>
         </div>
 
-        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0d121c; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
-          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-emerald);">2</div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0e1119; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-yellow);">2</div>
           <div>Toque no botão <strong>Compartilhar</strong> (ícone de quadrado com a seta para cima ⎋ na barra inferior do Safari).</div>
         </div>
 
-        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0d121c; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
-          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-emerald);">3</div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0e1119; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-yellow);">3</div>
           <div>Role as opções e toque em <strong>"Adicionar à Tela de Início"</strong> (ícone com o sinal ➕).</div>
         </div>
 
-        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0d121c; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
-          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-emerald);">4</div>
-          <div>Toque em <strong>"Adicionar"</strong> no canto superior direito. Pronto! O WeGoGym abrirá como app nativo com tela cheia.</div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; background: #0e1119; padding: 12px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="background: var(--bg-card); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-yellow);">4</div>
+          <div>Toque em <strong>"Adicionar"</strong> no canto superior direito. Pronto! O WeGoGym abrirá como app nativo com tela cheia e notificações!</div>
         </div>
 
         <button id="btnConfirmIosGuide" class="btn-finish-workout" style="margin-top: 8px;">Perfeito, entendi!</button>
@@ -305,7 +322,7 @@
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
       <div class="modal-header">
-        <h2 class="modal-title" style="color: var(--accent-emerald);">Treino Finalizado! 🔥</h2>
+        <h2 class="modal-title" style="color: var(--accent-yellow);">Treino Finalizado! 🔥</h2>
         <button id="btnCloseSummaryModal" class="icon-btn" style="border: none; background: transparent;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="18" y1="6" x2="6" y2="18"></line>

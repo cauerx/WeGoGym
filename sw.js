@@ -1,5 +1,5 @@
-// Service Worker para WeGoGym — Suporte 100% Offline
-const CACHE_NAME = 'wegogym-v1.0.0';
+// Service Worker para WeGoGym — Suporte 100% Offline & Notificações
+const CACHE_NAME = 'wegogym-v1.1.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -45,7 +45,6 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Ignora requisições de outras origens ou esquemas especiais
   if (!event.request.url.startsWith(self.location.origin)) {
     return;
   }
@@ -53,7 +52,6 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Retorna o cache e tenta atualizar em background (stale-while-revalidate)
         fetch(event.request).then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             caches.open(CACHE_NAME).then((cache) => {
@@ -74,11 +72,27 @@ self.addEventListener('fetch', (event) => {
         });
         return response;
       }).catch(() => {
-        // Se estiver offline e pedir HTML, retorna o index do cache
         if (event.request.headers.get('accept')?.includes('text/html')) {
           return caches.match('./index.html');
         }
       });
+    })
+  );
+});
+
+// Manipulador de clique na notificação (traz o WeGoGym para foco)
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow('./index.html');
+      }
     })
   );
 });

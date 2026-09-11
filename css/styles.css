@@ -1,28 +1,29 @@
 /* ==========================================================================
    WeGoGym — Design System Moderno & Otimizado para iOS PWA
+   Tema: Dark Gym com Acentos Dourados e Amarelo Energético (Gold / Amber)
    ========================================================================== */
 
 :root {
-  --bg-primary: #090d16;
-  --bg-secondary: #111827;
-  --bg-card: #141b2a;
-  --bg-card-hover: #1a2336;
-  --bg-elevated: #1e293b;
+  --bg-primary: #0a0b0e;
+  --bg-secondary: #12141a;
+  --bg-card: #151821;
+  --bg-card-hover: #1b1e2a;
+  --bg-elevated: #222634;
   
   --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(16, 185, 129, 0.4);
+  --border-focus: rgba(250, 204, 21, 0.45);
 
-  --accent-emerald: #10b981;
-  --accent-emerald-glow: rgba(16, 185, 129, 0.25);
+  --accent-yellow: #facc15;
+  --accent-yellow-glow: rgba(250, 204, 21, 0.3);
+  --accent-gold: #eab308;
   --accent-amber: #f59e0b;
-  --accent-amber-glow: rgba(245, 158, 11, 0.25);
-  --accent-cyan: #06b6d4;
-  --accent-cyan-glow: rgba(6, 182, 212, 0.2);
-  --accent-indigo: #6366f1;
+  --accent-amber-glow: rgba(245, 158, 11, 0.3);
+  --accent-orange: #f97316;
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
+  --text-dark: #0a0b0e;
 
   --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
   --sat: env(safe-area-inset-top, 0px);
@@ -53,7 +54,7 @@ html {
 body {
   min-height: 100vh;
   min-height: -webkit-fill-available;
-  background: radial-gradient(circle at 50% 0%, #151c2e 0%, var(--bg-primary) 70%);
+  background: radial-gradient(circle at 50% 0%, #242012 0%, var(--bg-primary) 70%);
   background-attachment: fixed;
   padding-top: max(12px, var(--sat));
   padding-bottom: calc(max(80px, var(--sab) + 70px));
@@ -89,24 +90,24 @@ body {
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+  background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px var(--accent-emerald-glow);
+  box-shadow: 0 4px 14px var(--accent-yellow-glow);
 }
 
 .brand-icon svg {
   width: 22px;
   height: 22px;
-  color: #ffffff;
+  color: var(--text-dark);
 }
 
 .brand-name {
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.5px;
-  background: linear-gradient(to right, #ffffff, #94a3b8);
+  background: linear-gradient(to right, #ffffff, #e2e8f0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -116,12 +117,12 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
+  background: rgba(250, 204, 21, 0.15);
+  color: #fde047;
   padding: 2px 6px;
   border-radius: 6px;
   margin-left: 6px;
-  border: 1px solid rgba(52, 211, 153, 0.3);
+  border: 1px solid rgba(250, 204, 21, 0.35);
 }
 
 .header-actions {
@@ -147,7 +148,7 @@ body {
 .icon-btn:active {
   transform: scale(0.92);
   background: var(--bg-elevated);
-  color: var(--text-primary);
+  color: var(--accent-yellow);
 }
 
 /* Seletor de Treinos (Tabs Estilo iOS Segmented Control) */
@@ -157,7 +158,7 @@ body {
 
 .segmented-tabs {
   display: flex;
-  background: #0d131f;
+  background: #0e1017;
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
   padding: 4px;
@@ -187,7 +188,7 @@ body {
   background: var(--bg-card);
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(250, 204, 21, 0.25);
 }
 
 .tab-btn .tab-sub {
@@ -197,17 +198,17 @@ body {
 }
 
 .tab-btn.active .tab-sub {
-  color: var(--accent-emerald);
+  color: var(--accent-yellow);
 }
 
 /* Painel Superior de Resumo e Tonelagem */
 .tonnage-summary-card {
-  background: linear-gradient(145deg, #131b2c 0%, #0f1523 100%);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: linear-gradient(145deg, #181a24 0%, #11131a 100%);
+  border: 1px solid rgba(250, 204, 21, 0.15);
   border-radius: 18px;
   padding: 16px;
   margin-bottom: 22px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(250, 204, 21, 0.05);
   position: relative;
   overflow: hidden;
 }
@@ -217,9 +218,9 @@ body {
   position: absolute;
   top: -40px;
   right: -40px;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, var(--accent-cyan-glow) 0%, transparent 70%);
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, var(--accent-yellow-glow) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -257,9 +258,9 @@ body {
 }
 
 .filter-toggle-btn.active {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border-color: rgba(52, 211, 153, 0.35);
+  background: rgba(250, 204, 21, 0.18);
+  color: #fde047;
+  border-color: rgba(250, 204, 21, 0.45);
 }
 
 .summary-grid {
@@ -292,7 +293,7 @@ body {
 
 .stat-unit {
   font-size: 0.75rem;
-  color: var(--accent-cyan);
+  color: var(--accent-yellow);
   font-weight: 700;
 }
 
@@ -349,15 +350,16 @@ body {
 }
 
 .muscle-pct {
-  color: var(--accent-cyan);
-  background: rgba(6, 182, 212, 0.12);
+  color: #fde047;
+  background: rgba(250, 204, 21, 0.16);
   padding: 1px 6px;
   border-radius: 4px;
+  font-weight: 800;
 }
 
 .bar-track {
   height: 6px;
-  background: #0d121c;
+  background: #0d1017;
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -366,7 +368,7 @@ body {
 .bar-fill {
   height: 100%;
   border-radius: 4px;
-  background: linear-gradient(90deg, #06b6d4, #10b981);
+  background: linear-gradient(90deg, #f59e0b, #facc15);
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -382,7 +384,7 @@ body {
 }
 
 .exercise-card:focus-within {
-  border-color: rgba(16, 185, 129, 0.3);
+  border-color: rgba(250, 204, 21, 0.4);
 }
 
 .exercise-header {
@@ -430,7 +432,7 @@ body {
 /* Seletor de Unidade KG / LBS por Exercício */
 .unit-toggle-pill {
   display: flex;
-  background: #0a0f18;
+  background: #0e1119;
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
   padding: 2px;
@@ -450,8 +452,8 @@ body {
 
 .unit-btn.active {
   background: var(--bg-elevated);
-  color: var(--text-primary);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  color: var(--accent-yellow);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .exercise-swap-btn {
@@ -470,6 +472,7 @@ body {
 
 .exercise-swap-btn:active {
   background: var(--bg-elevated);
+  color: var(--accent-yellow);
   transform: scale(0.92);
 }
 
@@ -511,7 +514,7 @@ body {
 }
 
 .set-row.completed {
-  background: rgba(16, 185, 129, 0.04);
+  background: rgba(250, 204, 21, 0.05);
 }
 
 .set-number {
@@ -540,15 +543,15 @@ body {
 }
 
 .set-type-badge.warmup {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(249, 115, 22, 0.18);
+  color: #fdba74;
+  border-color: rgba(249, 115, 22, 0.45);
 }
 
 .set-type-badge.work {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(250, 204, 21, 0.18);
+  color: #fde047;
+  border-color: rgba(250, 204, 21, 0.45);
 }
 
 .set-type-badge:active {
@@ -558,7 +561,7 @@ body {
 /* Inputs de Carga e Repetições (Otimizados para toque no iOS) */
 .input-field {
   width: 100%;
-  background: #0d121c;
+  background: #0e1119;
   border: 1px solid var(--border-subtle);
   border-radius: 9px;
   color: #ffffff;
@@ -574,9 +577,9 @@ body {
 }
 
 .input-field:focus {
-  border-color: var(--accent-emerald);
-  background: #111827;
-  box-shadow: 0 0 0 3px var(--accent-emerald-glow);
+  border-color: var(--accent-yellow);
+  background: #151824;
+  box-shadow: 0 0 0 3px var(--accent-yellow-glow);
 }
 
 /* Checkbox de Conclusão da Série (Botão de Ação Imediata) */
@@ -584,7 +587,7 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: #0d121c;
+  background: #0e1119;
   border: 1.5px solid var(--border-subtle);
   color: transparent;
   display: flex;
@@ -602,10 +605,10 @@ body {
 }
 
 .check-btn.checked {
-  background: var(--accent-emerald);
-  border-color: var(--accent-emerald);
-  color: #ffffff;
-  box-shadow: 0 3px 12px var(--accent-emerald-glow);
+  background: var(--accent-yellow);
+  border-color: var(--accent-yellow);
+  color: var(--text-dark);
+  box-shadow: 0 3px 14px var(--accent-yellow-glow);
   transform: scale(1.04);
 }
 
@@ -658,13 +661,13 @@ body {
   transform: translateX(-50%);
   width: calc(100% - 32px);
   max-width: 520px;
-  background: rgba(18, 24, 38, 0.92);
+  background: rgba(21, 24, 33, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(250, 204, 21, 0.25);
   border-radius: 20px;
   padding: 10px 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(250, 204, 21, 0.12);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -681,13 +684,14 @@ body {
 
 .floating-timer-bar.completed-pulse {
   animation: pulse-border 1s infinite alternate;
-  border-color: #10b981;
-  background: rgba(16, 185, 129, 0.92);
+  border-color: #facc15;
+  background: rgba(234, 179, 8, 0.96);
+  color: var(--text-dark);
 }
 
 @keyframes pulse-border {
-  from { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-  to { box-shadow: 0 0 35px rgba(16, 185, 129, 0.9); }
+  from { box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+  to { box-shadow: 0 0 35px rgba(250, 204, 21, 0.9); }
 }
 
 .timer-left {
@@ -718,7 +722,7 @@ body {
 }
 
 .timer-ring-progress {
-  stroke: var(--accent-indigo);
+  stroke: var(--accent-yellow);
   fill: none;
   stroke-width: 3.5;
   stroke-linecap: round;
@@ -726,13 +730,17 @@ body {
 }
 
 .floating-timer-bar.completed-pulse .timer-ring-progress {
-  stroke: #ffffff;
+  stroke: var(--text-dark);
 }
 
 .timer-icon-center {
   position: absolute;
   color: #ffffff;
   display: flex;
+}
+
+.floating-timer-bar.completed-pulse .timer-icon-center {
+  color: var(--text-dark);
 }
 
 .timer-time-display {
@@ -749,7 +757,7 @@ body {
 }
 
 .floating-timer-bar.completed-pulse .timer-label {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(10, 11, 14, 0.85);
 }
 
 .timer-digits {
@@ -757,6 +765,10 @@ body {
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.5px;
+}
+
+.floating-timer-bar.completed-pulse .timer-digits {
+  color: var(--text-dark);
 }
 
 .timer-controls {
@@ -776,15 +788,21 @@ body {
   cursor: pointer;
 }
 
+.floating-timer-bar.completed-pulse .timer-adjust-btn {
+  background: rgba(10, 11, 14, 0.15);
+  border-color: rgba(10, 11, 14, 0.25);
+  color: var(--text-dark);
+}
+
 .timer-adjust-btn:active {
   background: rgba(255, 255, 255, 0.16);
   transform: scale(0.92);
 }
 
 .timer-main-action {
-  background: var(--accent-indigo);
+  background: var(--accent-yellow);
   border: none;
-  color: #ffffff;
+  color: var(--text-dark);
   width: 36px;
   height: 36px;
   border-radius: 10px;
@@ -793,6 +811,11 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.floating-timer-bar.completed-pulse .timer-main-action {
+  background: var(--text-dark);
+  color: #facc15;
 }
 
 .timer-main-action:active {
@@ -811,6 +834,10 @@ body {
   cursor: pointer;
 }
 
+.floating-timer-bar.completed-pulse .timer-close-btn {
+  color: var(--text-dark);
+}
+
 /* Rodapé de Ações do Treino */
 .workout-footer-actions {
   display: flex;
@@ -822,8 +849,8 @@ body {
 
 .btn-add-exercise {
   width: 100%;
-  background: #111827;
-  border: 1.5px dashed rgba(255, 255, 255, 0.15);
+  background: #131620;
+  border: 1.5px dashed rgba(250, 204, 21, 0.3);
   color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 700;
@@ -839,15 +866,16 @@ body {
 
 .btn-add-exercise:active {
   background: var(--bg-card);
-  border-color: var(--accent-emerald);
+  border-color: var(--accent-yellow);
+  color: var(--accent-yellow);
   transform: scale(0.98);
 }
 
 .btn-finish-workout {
   width: 100%;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
   border: none;
-  color: #ffffff;
+  color: var(--text-dark);
   font-size: 1.05rem;
   font-weight: 800;
   padding: 16px;
@@ -857,13 +885,13 @@ body {
   justify-content: center;
   gap: 10px;
   cursor: pointer;
-  box-shadow: 0 6px 20px var(--accent-emerald-glow);
+  box-shadow: 0 6px 20px var(--accent-yellow-glow);
   transition: all 0.2s ease;
 }
 
 .btn-finish-workout:active {
   transform: scale(0.97);
-  box-shadow: 0 2px 10px var(--accent-emerald-glow);
+  box-shadow: 0 2px 10px var(--accent-yellow-glow);
 }
 
 /* Modais e Dialogs */
@@ -873,7 +901,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(5, 8, 14, 0.75);
+  background: rgba(5, 6, 8, 0.78);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display: flex;
@@ -892,7 +920,7 @@ body {
 
 .modal-sheet {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(250, 204, 21, 0.15);
   border-radius: 24px 24px 0 0;
   width: 100%;
   max-width: 600px;
@@ -912,7 +940,7 @@ body {
 .sheet-handle {
   width: 40px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(250, 204, 21, 0.3);
   border-radius: 4px;
   margin: 0 auto 16px auto;
 }
@@ -938,7 +966,7 @@ body {
 
 .search-input-wrap input {
   width: 100%;
-  background: #0d121c;
+  background: #0e1119;
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 12px 12px 12px 40px;
@@ -948,7 +976,7 @@ body {
 }
 
 .search-input-wrap input:focus {
-  border-color: var(--accent-emerald);
+  border-color: var(--accent-yellow);
 }
 
 .search-icon {
@@ -975,7 +1003,7 @@ body {
 
 .muscle-chip {
   white-space: nowrap;
-  background: #0d121c;
+  background: #0e1119;
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   font-size: 0.78rem;
@@ -987,9 +1015,10 @@ body {
 }
 
 .muscle-chip.active {
-  background: var(--accent-emerald);
-  color: #ffffff;
-  border-color: var(--accent-emerald);
+  background: var(--accent-yellow);
+  color: var(--text-dark);
+  font-weight: 800;
+  border-color: var(--accent-yellow);
 }
 
 /* Lista de Exercícios no Modal */
@@ -1007,7 +1036,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px;
-  background: #0d121c;
+  background: #0e1119;
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   cursor: pointer;
@@ -1016,7 +1045,7 @@ body {
 
 .exercise-option-item:active {
   background: var(--bg-elevated);
-  border-color: var(--accent-emerald);
+  border-color: var(--accent-yellow);
 }
 
 .opt-info {
@@ -1038,8 +1067,8 @@ body {
 
 /* Banner / Instrução iOS Add to Home Screen */
 .ios-banner {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(16, 185, 129, 0.1) 100%);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.16) 0%, rgba(245, 158, 11, 0.1) 100%);
+  border: 1px solid rgba(250, 204, 21, 0.35);
   border-radius: 14px;
   padding: 12px 14px;
   margin-bottom: 16px;
@@ -1051,7 +1080,7 @@ body {
 
 .ios-banner-text {
   font-size: 0.78rem;
-  color: #cbd5e1;
+  color: #fef08a;
   line-height: 1.35;
 }
 
@@ -1060,11 +1089,11 @@ body {
 }
 
 .ios-banner-btn {
-  background: var(--accent-indigo);
+  background: var(--accent-yellow);
   border: none;
-  color: #ffffff;
+  color: var(--text-dark);
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   padding: 6px 10px;
   border-radius: 8px;
   white-space: nowrap;
@@ -1075,7 +1104,7 @@ body {
 .screen-flash {
   position: fixed;
   inset: 0;
-  background: rgba(16, 185, 129, 0.3);
+  background: rgba(250, 204, 21, 0.35);
   pointer-events: none;
   opacity: 0;
   z-index: 9999;

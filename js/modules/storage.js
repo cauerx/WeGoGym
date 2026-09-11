@@ -14,7 +14,8 @@ const DEFAULT_SETTINGS = {
   autoStartTimer: true,
   soundEnabled: true,
   vibrateEnabled: true,
-  theme: 'dark'
+  notificationsEnabled: true,
+  theme: 'gold'
 };
 
 export class StorageService {

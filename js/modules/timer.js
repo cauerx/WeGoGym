@@ -1,4 +1,4 @@
-// Módulo de Cronômetro de Descanso (Rest Timer) com Áudio para iOS Safari
+// Módulo de Cronômetro de Descanso (Rest Timer) com Áudio, Notificações e Vibração
 export class RestTimer {
   constructor(options = {}) {
     this.duration = options.defaultDuration || 90; // segundos
@@ -36,7 +36,6 @@ export class RestTimer {
       } catch (e) {
         console.warn('AudioContext init warning:', e);
       }
-      // Remove os ouvintes após o primeiro toque
       ['touchstart', 'touchend', 'click'].forEach((event) => {
         window.removeEventListener(event, unlockAudio, { capture: true });
       });
@@ -48,7 +47,87 @@ export class RestTimer {
   }
 
   /**
-   * Toca sinal sonoro agradável e nítido sintetizado (Zero dependência de MP3)
+   * Verifica o status atual da permissão de notificações
+   */
+  static getNotificationStatus() {
+    if (!('Notification' in window)) return 'unsupported';
+    return Notification.permission; // 'granted', 'denied', 'default'
+  }
+
+  /**
+   * Solicita permissão para envio de notificações do sistema
+   */
+  static async requestNotificationPermission() {
+    if (!('Notification' in window)) {
+      return 'unsupported';
+    }
+    if (Notification.permission === 'granted') {
+      return 'granted';
+    }
+    try {
+      const permission = await Notification.requestPermission();
+      return permission;
+    } catch (err) {
+      console.warn('Erro ao solicitar permissão de notificação:', err);
+      return 'denied';
+    }
+  }
+
+  /**
+   * Envia Notificação Push / Local e dispara vibração do sistema
+   */
+  sendNotification(customTitle = null, customBody = null) {
+    if (!('Notification' in window) || Notification.permission !== 'granted') {
+      return;
+    }
+
+    const title = customTitle || 'Descanso Finalizado! ⏱️';
+    const options = {
+      body: customBody || 'Hora da próxima série! Força total 💪',
+      icon: 'icons/icon-192.png',
+      badge: 'icons/favicon-32.png',
+      vibrate: [300, 150, 300, 150, 500],
+      tag: 'wegogym-rest-timer',
+      renotify: true,
+      requireInteraction: false
+    };
+
+    // Prefere usar o Service Worker para garantir suporte no iOS PWA instalado
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.ready
+        .then((reg) => {
+          reg.showNotification(title, options);
+        })
+        .catch(() => {
+          try {
+            new Notification(title, options);
+          } catch (e) {}
+        });
+    } else {
+      try {
+        new Notification(title, options);
+      } catch (e) {
+        console.warn('Notificação fallback erro:', e);
+      }
+    }
+  }
+
+  /**
+   * Dispara vibração no celular (Android e navegadores com suporte a haptics)
+   */
+  triggerVibration() {
+    if ('vibrate' in navigator) {
+      try {
+        // Padrão de vibração: Vibra 300ms, pausa 150ms, vibra 300ms, pausa 150ms, vibra 500ms
+        navigator.vibrate([300, 150, 300, 150, 500]);
+      } catch (e) {
+        console.warn('Erro na vibração:', e);
+      }
+    }
+  }
+
+  /**
+   * Toca sinal sonoro sintetizado em tom dourado/energético
    */
   playAlertSound() {
     try {
@@ -64,12 +143,12 @@ export class RestTimer {
 
       const now = this.audioContext.currentTime;
 
-      // Primeiro tom (880 Hz - Nota A5)
+      // Nota 1 (987.77 Hz - B5)
       const osc1 = this.audioContext.createOscillator();
       const gain1 = this.audioContext.createGain();
       osc1.type = 'sine';
-      osc1.frequency.setValueAtTime(880, now);
-      gain1.gain.setValueAtTime(0.3, now);
+      osc1.frequency.setValueAtTime(987.77, now);
+      gain1.gain.setValueAtTime(0.32, now);
       gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
 
       osc1.connect(gain1);
@@ -77,28 +156,43 @@ export class RestTimer {
       osc1.start(now);
       osc1.stop(now + 0.35);
 
-      // Segundo tom harmônico mais agudo (1318.5 Hz - Nota E6)
+      // Nota 2 (1318.51 Hz - E6)
       const osc2 = this.audioContext.createOscillator();
       const gain2 = this.audioContext.createGain();
       osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(1318.5, now + 0.18);
-      gain2.gain.setValueAtTime(0.35, now + 0.18);
-      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+      osc2.frequency.setValueAtTime(1318.51, now + 0.15);
+      gain2.gain.setValueAtTime(0.35, now + 0.15);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
 
       osc2.connect(gain2);
       gain2.connect(this.audioContext.destination);
-      osc2.start(now + 0.18);
-      osc2.stop(now + 0.65);
+      osc2.start(now + 0.15);
+      osc2.stop(now + 0.55);
+
+      // Nota 3 (1760 Hz - A6) - Acorde Triunfante
+      const osc3 = this.audioContext.createOscillator();
+      const gain3 = this.audioContext.createGain();
+      osc3.type = 'sine';
+      osc3.frequency.setValueAtTime(1760, now + 0.3);
+      gain3.gain.setValueAtTime(0.38, now + 0.3);
+      gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.85);
+
+      osc3.connect(gain3);
+      gain3.connect(this.audioContext.destination);
+      osc3.start(now + 0.3);
+      osc3.stop(now + 0.85);
     } catch (err) {
       console.warn('Erro ao tocar áudio sintetizado:', err);
     }
+  }
 
-    // Tenta vibração se o dispositivo suportar
-    if ('vibrate' in navigator) {
-      try {
-        navigator.vibrate([200, 100, 200, 100, 400]);
-      } catch (e) {}
-    }
+  /**
+   * Dispara todos os alertas de conclusão (Som + Vibração + Notificação Push)
+   */
+  triggerAllAlerts() {
+    this.playAlertSound();
+    this.triggerVibration();
+    this.sendNotification();
   }
 
   /**
@@ -125,7 +219,7 @@ export class RestTimer {
 
       if (this.remaining <= 0) {
         this.stop(false);
-        this.playAlertSound();
+        this.triggerAllAlerts();
         this.onComplete(this.getState());
       }
     }, 250);
@@ -160,7 +254,7 @@ export class RestTimer {
 
       if (this.remaining <= 0) {
         this.stop(false);
-        this.playAlertSound();
+        this.triggerAllAlerts();
         this.onComplete(this.getState());
       }
     }, 250);
